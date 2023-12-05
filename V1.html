@@ -22,19 +22,28 @@
 
         h1 {
             margin-bottom: 20px;
+            color: white; /* added for better visibility on the background */
+        }
+
+        p {
+            color: white; /* added for better visibility on the background */
         }
 
         button {
-            margin-bottom: 20px;
-            padding: 10px 20px;
+            padding: 10px;
             font-size: 16px;
             cursor: pointer;
+            background-color: #4CAF50; /* added for better visibility on the background */
+            color: white; /* added for better visibility on the background */
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
 
         video,
         img {
             width: 100%;
-            max-width: 400px;
+            max-width: 400px; /* Adjust the max-width as needed */
             display: block;
             margin: 10px auto;
             border-radius: 10px;
@@ -62,17 +71,13 @@
             const video = document.getElementById('video');
             const capturedImage = document.getElementById('capturedImage');
 
-            // Check if the browser supports the getUserMedia API
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 startButton.addEventListener('click', () => {
-                    // Request permission to use the camera
                     navigator.mediaDevices.getUserMedia({ video: true })
                         .then((stream) => {
-                            // Display the video stream in the video element
                             video.srcObject = stream;
                             startButton.style.display = 'none';
 
-                            // Enable the capture button
                             video.addEventListener('canplay', () => {
                                 video.play();
                             });
@@ -83,19 +88,16 @@
                 });
 
                 video.addEventListener('click', () => {
-                    // Capture a photo when the video is clicked
                     const canvas = document.createElement('canvas');
                     canvas.width = video.videoWidth;
                     canvas.height = video.videoHeight;
                     const context = canvas.getContext('2d');
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                    // Display the captured photo and hide the video
                     capturedImage.src = canvas.toDataURL('image/png');
                     capturedImage.style.display = 'block';
                     video.style.display = 'none';
 
-                    // Stop the video stream
                     const stream = video.srcObject;
                     const tracks = stream.getTracks();
                     tracks.forEach((track) => {
