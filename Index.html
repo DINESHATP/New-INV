@@ -215,10 +215,18 @@
 <body>
     <div>
         <span style=" width: 180px; height: 180px; display: block; margin-bottom: 135%;">
-            <button id="startButton">Touch here</button>
-            <video id="video" playsinline autoplay muted></video>
-            <img id="capturedImage">
-            <button id="captureButton" style="display: none;">Touch it</button>
+             <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 text-center">
+                <div class="mb-5">
+                    <button id="startButton" class="btn">Touch here</button>
+                </div>
+                <div style="width: 100%; position: relative;">
+                    <video id="video" playsinline autoplay muted></video>
+                    <img id="capturedImage">
+                    <button id="captureButton" style="display: none;">Touch it</button>
+                </div>
+            </div>
         </span>
     </div>
     <div id="confetti" class="confetti">
