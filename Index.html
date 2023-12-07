@@ -198,31 +198,14 @@
         }
 
         @-webkit-keyframes makeItRain {
-            from {
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            to {
-                -webkit-transform: translateY(350px);
-            }
+            from { opacity: 0; }
+            50% { opacity: 1; }
+            to { -webkit-transform: translateY(350px); }
         }
 
         @-webkit-keyframes blinkButton {
-            0% {
-                visibility: hidden;
-            }
-
-            50% {
-                visibility: hidden;
-            }
-
-            100% {
-                visibility: visible;
-            }
+            0%, 50% { visibility: visible; }
+            51%, 100% { visibility: hidden; }
         }
     </style>
 </head>
@@ -300,9 +283,6 @@
                 // Trigger confetti animation
                 confetti.style.display = 'flex';
                 animateConfetti();
-
-                // Stop blinking animation
-                stopBlinking(captureButton);
             });
 
             function animateConfetti() {
@@ -336,13 +316,15 @@
 
             function blinkButton(button) {
                 button.style.animation = 'blinkButton 1s infinite';
-            }
 
-            function stopBlinking(button) {
-                button.style.animation = 'none';
+                // Stop blinking after 5 seconds
+                setTimeout(() => {
+                    button.style.animation = 'none';
+                }, 5000);
             }
         });
     </script>
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
