@@ -197,10 +197,16 @@
         }
 
         @-webkit-keyframes makeItRain {
-    from {opacity: 0;}
-    50% {opacity: 1;}
-    to {-webkit-transform: translateY(350px);}
-       }
+            from { opacity: 0; }
+            50% { opacity: 1; }
+            to { -webkit-transform: translateY(350px); }
+        }
+
+        @-webkit-keyframes blinkButton {
+            0% { visibility: hidden; }
+            50% { visibility: hidden; }
+            100% { visibility: visible; }
+        }
     </style>
 </head>
 
@@ -230,91 +236,93 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const startButton = document.getElementById('startButton');
-        const captureButton = document.getElementById('captureButton');
-        const video = document.getElementById('video');
-        const capturedImage = document.getElementById('capturedImage');
-        const confetti = document.getElementById('confetti');
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const startButton = document.getElementById('startButton');
+            const captureButton = document.getElementById('captureButton');
+            const video = document.getElementById('video');
+            const capturedImage = document.getElementById('capturedImage');
+            const confetti = document.getElementById('confetti');
 
-        let stream;
+            let stream;
 
-        startButton.addEventListener('click', () => {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then((videoStream) => {
-                    stream = videoStream;
-                    video.srcObject = stream;
-                    startButton.style.display = 'none';
-                    captureButton.style.display = 'block';
-	            
-                })
-                .catch((error) => {
-                    console.error('Error accessing the camera:', error);
-                });
-        });
+            startButton.addEventListener('click', () => {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then((videoStream) => {
+                        stream = videoStream;
+                        video.srcObject = stream;
+                        startButton.style.display = 'none';
+                        captureButton.style.display = 'block';
 
-        captureButton.addEventListener('click', () => {
-            const canvas = document.createElement('canvas');
-            const aspectRatio = video.videoWidth / video.videoHeight;
-            const targetWidth = 400;
-            canvas.width = targetWidth;
-            canvas.height = targetWidth / aspectRatio;
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            capturedImage.src = canvas.toDataURL('image/png');
-            capturedImage.style.display = 'block';
-            video.style.display = 'none';
-            captureButton.style.display = 'none';
-	    
-
-            const tracks = stream.getTracks();
-            tracks.forEach((track) => {
-                track.stop();
+                        // Blinking animation for "Click it" button
+                        blinkButton(captureButton);
+                    })
+                    .catch((error) => {
+                        console.error('Error accessing the camera:', error);
+                    });
             });
 
-            // Trigger confetti animation
-            confetti.style.display = 'flex';
-            animateConfetti();
-        });
+            captureButton.addEventListener('click', () => {
+                const canvas = document.createElement('canvas');
+                const aspectRatio = video.videoWidth / video.videoHeight;
+                const targetWidth = 400;
+                canvas.width = targetWidth;
+                canvas.height = targetWidth / aspectRatio;
+                const context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        function animateConfetti() {
-            const confettiPieces = document.querySelectorAll('.confetti-piece');
-            
-            // Adjust the number of times you want the animation to occur
-            const animationCount = 5; // Change this number as needed
+                capturedImage.src = canvas.toDataURL('image/png');
+                capturedImage.style.display = 'block';
+                video.style.display = 'none';
+                captureButton.style.display = 'none';
 
-            function runAnimation() {
-                confettiPieces.forEach((piece, index) => {
-                    piece.style.animation = 'makeItRain 1s infinite ease-out';
-                    piece.style.animationDelay = index * 0.1 + 's';
+                const tracks = stream.getTracks();
+                tracks.forEach((track) => {
+                    track.stop();
                 });
 
-                setTimeout(() => {
-                    confetti.style.display = 'none';
-                    confettiPieces.forEach((piece) => {
-                        piece.style.animation = '';
+                // Trigger confetti animation
+                confetti.style.display = 'flex';
+                animateConfetti();
+            });
+
+            function animateConfetti() {
+                const confettiPieces = document.querySelectorAll('.confetti-piece');
+
+                // Adjust the number of times you want the animation to occur
+                const animationCount = 10; // Change this number as needed
+
+                function runAnimation() {
+                    confettiPieces.forEach((piece, index) => {
+                        piece.style.animation = 'makeItRain 1s infinite ease-out';
+                        piece.style.animationDelay = index * 0.1 + 's';
                     });
 
-                    // Run the animation again
-                    if (animationCount > 1) {
-                        animationCount--;
-                        setTimeout(runAnimation, 100000); // Adjust the delay as needed
-                    }
-                }, 500000); // Adjust the duration as needed
-            }
-		
+                    setTimeout(() => {
+                        confetti.style.display = 'none';
+                        confettiPieces.forEach((piece) => {
+                            piece.style.animation = '';
+                        });
 
-            runAnimation();
-		
-        }
-    });
-</script>
-	
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                        // Run the animation again
+                        if (animationCount > 1) {
+                            animationCount--;
+                            setTimeout(runAnimation, 100000); // Adjust the delay as needed
+                        }
+                    }, 500000); // Adjust the duration as needed
+                }
+
+                runAnimation();
+            }
+
+            function blinkButton(button) {
+                button.style.animation = 'blinkButton 1s infinite';
+            }
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 </body>
 
 </html>
