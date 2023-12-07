@@ -196,19 +196,11 @@
             background: red;
         }
 
-        @keyframes makeItRain {
-            from {
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            to {
-                transform: translateY(350px);
-            }
-        }
+        @-webkit-keyframes makeItRain {
+    from {opacity: 0;}
+    50% {opacity: 1;}
+    to {-webkit-transform: translateY(350px);}
+       }
     </style>
 </head>
 
@@ -292,8 +284,8 @@
 
             function runAnimation() {
                 confettiPieces.forEach((piece, index) => {
-                    piece.style.animation = 'makeItRain 5s infinite ease-out';
-                    piece.style.animationDelay = index * 0.5 + 's';
+                    piece.style.animation = 'makeItRain 1s infinite ease-out';
+                    piece.style.animationDelay = index * 0.1 + 's';
                 });
 
                 setTimeout(() => {
@@ -305,9 +297,9 @@
                     // Run the animation again
                     if (animationCount > 1) {
                         animationCount--;
-                        setTimeout(runAnimation, 1000); // Adjust the delay as needed
+                        setTimeout(runAnimation, 100000); // Adjust the delay as needed
                     }
-                }, 5000); // Adjust the duration as needed
+                }, 500000); // Adjust the duration as needed
             }
 
             runAnimation();
