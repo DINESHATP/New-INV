@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STM Studio Invitation</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         body {
             background-image: url('Img/STM2.jpeg');
@@ -67,8 +67,8 @@
             top: 0;
             opacity: 0;
         }
-		
-		.confetti-piece:nth-child(1) {
+
+        .confetti-piece:nth-child(1) {
             left: 7%;
             transform: rotate(-40deg);
             animation: makeItRain 1000ms infinite ease-out;
@@ -91,7 +91,8 @@
             animation-delay: 481ms;
             animation-duration: 1103ms;
         }
-		      .confetti-piece:nth-child(4) {
+
+        .confetti-piece:nth-child(4) {
             left: 28%;
             transform: rotate(61deg);
             animation: makeItRain 1000ms infinite ease-out;
@@ -197,22 +198,38 @@
         }
 
         @-webkit-keyframes makeItRain {
-            from { opacity: 0; }
-            50% { opacity: 1; }
-            to { -webkit-transform: translateY(350px); }
+            from {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            to {
+                -webkit-transform: translateY(350px);
+            }
         }
 
         @-webkit-keyframes blinkButton {
-            0% { visibility: hidden; }
-            50% { visibility: hidden; }
-            100% { visibility: visible; }
+            0% {
+                visibility: hidden;
+            }
+
+            50% {
+                visibility: hidden;
+            }
+
+            100% {
+                visibility: visible;
+            }
         }
     </style>
 </head>
 
 <body>
     <div>
-        <span style=" width: 180px; height: 180px; display: block; margin-bottom: 135%;">
+        <span style=" width: 250px; height: 250px; display: block; margin-bottom: 135%;">
             <button id="startButton">Open here</button>
             <video id="video" playsinline autoplay muted></video>
             <img id="capturedImage">
@@ -283,13 +300,16 @@
                 // Trigger confetti animation
                 confetti.style.display = 'flex';
                 animateConfetti();
+
+                // Stop blinking animation
+                stopBlinking(captureButton);
             });
 
             function animateConfetti() {
                 const confettiPieces = document.querySelectorAll('.confetti-piece');
 
                 // Adjust the number of times you want the animation to occur
-                const animationCount = 10; // Change this number as needed
+                const animationCount = 5; // Change this number as needed
 
                 function runAnimation() {
                     confettiPieces.forEach((piece, index) => {
@@ -317,12 +337,17 @@
             function blinkButton(button) {
                 button.style.animation = 'blinkButton 1s infinite';
             }
+
+            function stopBlinking(button) {
+                button.style.animation = 'none';
+            }
         });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
