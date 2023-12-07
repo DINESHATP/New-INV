@@ -265,6 +265,7 @@
             capturedImage.style.display = 'block';
             video.style.display = 'none';
             captureButton.style.display = 'none';
+	    blinkButton(captureButton);
 
             const tracks = stream.getTracks();
             tracks.forEach((track) => {
